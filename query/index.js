@@ -1,7 +1,7 @@
 const db = require("../connection");
 
 module.exports = {
-  // get all question with answers
+  // get question(s) with answers
   selectQuestion: async (id = null) => {
    
     try {
@@ -29,6 +29,7 @@ module.exports = {
       console.log(err);
     }
   },
+  // insert question with answers
   insertQuestionWithAns: async (question, answers) => {
     try {
       await db.query(`START TRANSACTION`);
@@ -48,8 +49,25 @@ module.exports = {
       console.log(err);
     }
   },
-  insertAnswers: async (answers, question_id) => {
+  // get user(s)
+  selectUser: async (id= null) => {
     try {
+      let queryString = `SELECT * FROM users`;
+      if (id) {
+        queryString += ` WHERE user_id = ${id} `;
+      }
+      let [rows] = await db.query(queryString);
+      return rows;
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  // insert User
+  insertUser: async (username) => {
+    try {
+      let [data] = await db.execute(
+        `INSERT INTO user(username) VALUES('${username}')`
+      );
       return data.insertId;
     } catch (err) {
       console.log(err);

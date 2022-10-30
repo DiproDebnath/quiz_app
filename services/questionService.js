@@ -1,14 +1,15 @@
-const db = require("../connection");
+
 const query = require("../query");
 
 
 
 module.exports = {
   // get all question with answer
-  getQuestion: async (req, res) => {
+  getQuestions: async (req, res) => {
     let data = await query.selectQuestion();
     res.json(data);
   },
+  // get single question with answer
   getQuestionById: async (req, res) => {
     let [data] = await query.selectQuestion(req.params.id);
     if(data){
@@ -25,7 +26,7 @@ module.exports = {
   },
 
 
-  // create question
+  // create question with answer
   addQuestionWithAnswer: async (req, res) => {
     await query.insertQuestionWithAns(req.body.question, req.body.answers )
     res.json({ message: "question and answers created successfully" });

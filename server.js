@@ -10,7 +10,9 @@ app.use(express.urlencoded({extended: true}))
 
 
 const questionRouter = require("./routes/question")
+const userRouter = require("./routes/user")
 
-app.use("/question", questionRouter)
+app.use("/questions", questionRouter)
+app.use("/users", userRouter)
 
 app.listen(3000)

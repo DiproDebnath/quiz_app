@@ -5,7 +5,7 @@ const questionService = require('../services/questionService')
 
 
 
-router.get("/", questionService.getQuestion)
+router.get("/", questionService.getQuestions)
 router.get("/:id", questionService.getQuestionById)
 
 
