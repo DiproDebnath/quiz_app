@@ -2,7 +2,9 @@ const query = require("../query");
 
 module.exports = {
   getResult: async (req, res) => {
-    res.json({});
+    let queryData = await query.getSurveyResult(req.body.user_id);
+
+    res.json(queryDatagit);
   },
 
   UserAnswer: async (req, res) => {
