@@ -66,11 +66,41 @@ module.exports = {
   insertUser: async (username) => {
     try {
       let [data] = await db.execute(
-        `INSERT INTO user(username) VALUES('${username}')`
+        `INSERT INTO users(username) VALUES('${username}')`
       );
       return data.insertId;
     } catch (err) {
       console.log(err);
     }
   },
+
+  // get answer from user
+  insertUserAnswer: async (answer_data) => {
+    try {
+      let [data] = await db.query(
+        `INSERT INTO user_question_answers(user_id, question_id, answer_id) VALUES ( ? ) `,
+        [ [answer_data.user_id, answer_data.question_id, answer_data.answer_id ]] 
+      );
+      let statement = `SELECT a.is_right_ans AS correct_ans, uqa.answer_id  FROM user_question_answers uqa  `;
+          statement += ` JOIN questions q USING(question_id) ` 
+          statement += ` JOIN answers a USING(question_id) ` 
+          statement += ` WHERE a.is_right_ans = 1 AND uqa.id = ${data.insertId}` 
+      let [rows] = await db.query(statement)
+      return rows[0];
+    } catch (err) {
+      console.log(err.sqlMessage);
+    }
+  }, 
+  getSurveyResult: async (user) => {
+    try {
+      let statement = `SELECT a.is_right_ans AS correct_ans, uqa.answer_id  FROM user_question_answers uqa  `;
+          statement += ` JOIN questions q USING(question_id) ` 
+          statement += ` JOIN answers a USING(question_id) ` 
+          statement += ` WHERE 1 AND uqa.id = ${data.insertId}` 
+      let [rows] = await db.query(statement)
+      return rows[0];
+    } catch (err) {
+      console.log(err.sqlMessage);
+    }
+  } 
 };
