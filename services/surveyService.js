@@ -4,7 +4,7 @@ module.exports = {
   getResult: async (req, res) => {
     let queryData = await query.getSurveyResult(req.body.user_id);
 
-    res.json(queryDatagit);
+    res.json(queryData);
   },
 
   UserAnswer: async (req, res) => {
